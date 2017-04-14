@@ -27,7 +27,12 @@ public class BinarySearchTree {
 	}
 
 	/*
-	 * 20 / \ 15 25 / \ / 10 18 23
+
+			  20
+		    /    \
+		   15     25
+		  /  \     /
+		 10  18   23 
 	 */
 	private TreeNode insert(TreeNode node, int data) {
 		if (node == null)
