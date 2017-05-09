@@ -3,9 +3,9 @@ package org.rash.interview;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -170,12 +170,12 @@ public class StringsAlgorithms {
 		fr.close();
 	}
 
-	public void frequencyOfWordsInFileWOTUsingCollections() throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Enter the sentence");
-		String st = br.readLine();
-		String arr[] = new String[st.length()];
-		String[] words = new String[st.length()];
+	public static void frequencyOfWordsWOTUsingCollections(String str) throws IOException {
+		// BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		// System.out.println("Enter the sentence");
+		// String st = br.readLine();
+		String arr[] = new String[str.length()];
+		String[] words = new String[str.length()];
 		int[] counts = new int[arr.length];
 		words[0] = words[0];
 		counts[0] = 1;
@@ -188,8 +188,11 @@ public class StringsAlgorithms {
 				counts[j] = 1;
 			}
 		}
+
+		System.out.println(Arrays.toString(words));
 	}
 
+	// O(n2)
 	public static char firstNonRepetableCharacterDS(String str) {
 		for (int i = 0; i < str.length(); i++) {
 			boolean flag = false;
@@ -301,6 +304,27 @@ public class StringsAlgorithms {
 			}
 			if (count > 0) {
 				System.out.println((char) i + " " + count);
+			}
+		}
+	}
+
+	public void frequencyOfCharacters(String str) {
+		char[] c = str.toCharArray();
+		int count = 0;
+
+		for (int i = 0; i < c.length; i++) {
+			boolean flag = true;
+			for (int k = 0; k < i; k++) {
+				if (c[i] == (str.charAt(k)))
+					flag = false;
+			}
+			if (flag) {
+				for (int j = 0; j < str.length(); j++) {
+					if (c[i] == str.charAt(j))
+						count = count + 1;
+				}
+				System.out.println(c[i] + " " + " " + (count));
+				count = 0;
 			}
 		}
 	}
@@ -438,27 +462,6 @@ public class StringsAlgorithms {
 		if (i >= 0 || j <= str.length() - 1)
 			return false;
 		return true;
-	}
-
-	public void frequencyOfCharacters(String str) {
-		char[] c = str.toCharArray();
-		int count = 0;
-
-		for (int i = 0; i < c.length; i++) {
-			boolean flag = true;
-			for (int k = 0; k < i; k++) {
-				if (c[i] == (str.charAt(k)))
-					flag = false;
-			}
-			if (flag) {
-				for (int j = 0; j < str.length(); j++) {
-					if (c[i] == str.charAt(j))
-						count = count + 1;
-				}
-				System.out.println(c[i] + " " + " " + (count));
-				count = 0;
-			}
-		}
 	}
 
 	public String findDuplicateCharatersInString(String str) {
@@ -622,10 +625,6 @@ public class StringsAlgorithms {
 
 	}
 
-	public void frequencyOfWords(String myString) {
-
-	}
-
 	public String palindromUsingLinkedList(String str) {
 		// List<String> t = new LinkedList<String>();
 		for (int i = str.length() - 1; i >= 0; i--) {
@@ -715,6 +714,8 @@ public class StringsAlgorithms {
 		return perm;
 	}
 
+	// {Rasool, Shahez, Bannu, Papi, Rasool, Papi, Bannu, Papi, Rasool }
+	// Elections winner should be calcluated on above set. If 2 persons got same no.of votes, based on name(Bigger String) winner has to decide
 	public static String electionJava(String[] names) {
 		Map<String, Integer> myMap = new TreeMap<String, Integer>();
 
@@ -776,8 +777,9 @@ public class StringsAlgorithms {
 		return a;
 	}
 
+	// {"ABC","DBC","DDD","BCA","ACB", "BDC"} -> {{"ABC"-> "BCA","ACB"},{"DBC"->"BDC"}}
 	public static void groupAnagrams(String[] args) {
-		HashMap<String, List<String>> matchMap = new HashMap<>();
+		Map<String, List<String>> matchMap = new HashMap<>();
 		for (String word : args) {
 			String key = anagramKey(word);
 			if (!matchMap.containsKey(key)) {
@@ -795,8 +797,9 @@ public class StringsAlgorithms {
 		return new String(chars);
 	}
 
-	public static List<String> crunchifyPermutation(String str) {
-		List<String> crunchifyResult = new ArrayList<String>();
+	public static Collection<String> crunchifyPermutation(String str) {
+//		 List<String> crunchifyResult = new ArrayList<String>(); if need to print duplicates as well
+		Set<String> crunchifyResult = new HashSet<String>();
 		if (str == null) {
 			return null;
 		} else if (str.length() == 0) {
@@ -806,7 +809,7 @@ public class StringsAlgorithms {
 
 		char firstChar = str.charAt(0);
 		String rem = str.substring(1);
-		List<String> words = crunchifyPermutation(rem);
+		Collection<String> words = crunchifyPermutation(rem);
 		for (String newString : words) {
 			for (int i = 0; i <= newString.length(); i++) {
 				crunchifyResult.add(crunchifyCharAdd(newString, firstChar, i));
@@ -821,7 +824,7 @@ public class StringsAlgorithms {
 		return first + c + last;
 	}
 
-	public static void main(String[] args) {
+	public static void mainss(String[] args) {
 		String s1 = "xxx";
 		// String s2 = "ABC";
 		System.out.println("\nString " + s1 + ":\nPermutations: " + crunchifyPermutation(s1));
@@ -859,37 +862,37 @@ public class StringsAlgorithms {
 		// If we made it all the way through that loop without returning false, then
 		return true;
 	}
-	
+
 	private static boolean canMakeAPalindrome(String testStr) {
-        int[] frequencyArr = createFrequencyArray(testStr);
- 
-        int oddCharCount = 0;
- 
-        for (int ch : frequencyArr) {
- 
-            // Count characters with odd occurrence.
-            if (ch % 2 != 0)
-                oddCharCount++;
- 
-            // If more than one character in the string has odd occurrence then
-            // palindrome cannot be formed from given string
-            if (oddCharCount > 1)
-                return false;
-        }
- 
-        return true;
-    }
- 
-    private static int[] createFrequencyArray(String testStr) {
-        int[] frequencyArr = new int[256];
- 
-        char[] charArray = testStr.toCharArray();
- 
-        for (char ch : charArray)
-            frequencyArr[ch]++;
- 
-        return frequencyArr;
-    }
+		int[] frequencyArr = createFrequencyArray(testStr);
+
+		int oddCharCount = 0;
+
+		for (int ch : frequencyArr) {
+
+			// Count characters with odd occurrence.
+			if (ch % 2 != 0)
+				oddCharCount++;
+
+			// If more than one character in the string has odd occurrence then
+			// palindrome cannot be formed from given string
+			if (oddCharCount > 1)
+				return false;
+		}
+
+		return true;
+	}
+
+	private static int[] createFrequencyArray(String testStr) {
+		int[] frequencyArr = new int[256];
+
+		char[] charArray = testStr.toCharArray();
+
+		for (char ch : charArray)
+			frequencyArr[ch]++;
+
+		return frequencyArr;
+	}
 
 	public static class Interview {
 

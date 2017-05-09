@@ -157,13 +157,6 @@ public class NumericalLogicalQuestions {
 
 	}
 
-	public static int fib(int n) {
-		if (n == 1 || n == 2) {
-			return 1;
-		}
-		return (n - 1) + (n - 2);
-	}
-
 	public static int gcd(int x, int y) {
 		int r = 0, a, b;
 		a = (x > y) ? x : y; // a is greater number

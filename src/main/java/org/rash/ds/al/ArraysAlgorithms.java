@@ -49,11 +49,15 @@ public class ArraysAlgorithms {
 	public static int[] insertAnElement(int[] a, int e, int p) {
 
 		int sizeOfArray = sizeOfArray(a);
-		for (int i = sizeOfArray; i >= p; i--)
-			a[i + 1] = a[i];
-		a[p] = e;
-		for (int i = 0; i < sizeOfArray + 1; i++)
-			System.out.println(a[i]);
+		if (sizeOfArray < a.length - 1) {
+			for (int i = sizeOfArray; i >= p; i--)
+				a[i + 1] = a[i];
+			a[p] = e;
+			for (int i = 0; i < sizeOfArray + 1; i++)
+				System.out.println(a[i]);
+		} else {
+			throw new ArrayIndexOutOfBoundsException();
+		}
 		return a;
 	}
 
@@ -124,6 +128,21 @@ public class ArraysAlgorithms {
 				s = a[i];
 		}
 		System.out.println("Largest Number: " + l + " Smallest Number: " + s);
+	}
+
+	public static void topTwoNumbers(int[] numbers) {
+		int max1 = Integer.MIN_VALUE;
+		int max2 = Integer.MIN_VALUE;
+
+		for (int number : numbers) {
+			if (number > max1) {
+				max2 = max1;
+				max1 = number;
+			} else if (number > max2) {
+				max2 = number;
+			}
+		}
+		System.out.println(max1 + " " + max2);
 	}
 
 	public static int linearSearch(int[] a, int e) {
@@ -210,6 +229,7 @@ public class ArraysAlgorithms {
 		Set<Integer> a1 = new HashSet<>();
 		List<Integer> intersection = new ArrayList<>();
 		Arrays.stream(a).forEach(a1::add);
+		// Arrays.stream(b).filter(a1::contains).toArray();
 		Arrays.stream(b).filter(a1::contains).forEach(intersection::add);
 		return intersection.toArray(new Integer[intersection.size()]);
 	}
@@ -251,21 +271,6 @@ public class ArraysAlgorithms {
 		return inter;
 	}
 
-	public static void topTwoNumbers(int[] numbers) {
-		int max1 = Integer.MIN_VALUE;
-		int max2 = Integer.MIN_VALUE;
-
-		for (int number : numbers) {
-			if (number > max1) {
-				max2 = max1;
-				max1 = number;
-			} else if (number > max2) {
-				max2 = number;
-			}
-		}
-		System.out.println(max1 + " " + max2);
-	}
-
 	public static int[] mergeSortedArrays(int[] a, int[] b) {
 		int[] r = new int[a.length + b.length];
 		int i = 0, j = 0, k = 0;
@@ -285,6 +290,11 @@ public class ArraysAlgorithms {
 		return r;
 	}
 
+	// Merge two arrays which are sorted by desc order, my ouput should same desc order
+	public static int[] mergeSortedArraysDesc(int[] a, int[] b) {
+		return a;
+	}
+
 	// O(n2)
 	public static int firstRepeatableElement(int[] a) {
 		for (int i = 0; i < a.length; i++) {
@@ -297,6 +307,7 @@ public class ArraysAlgorithms {
 		return 0;
 	}
 
+	// logic is wrong with this example { 8, 7, 4, 3, 5, 6, 3, 4 }
 	public static int firstRepeatableElementDS(int[] a) {
 		for (int e : a) {
 			if (findOccurences(a, e) > 1)
@@ -400,7 +411,7 @@ public class ArraysAlgorithms {
 		}
 	}
 
-	// O(nlogn) if array is already sorted O(logn)
+	// O(nlogn), if array is already sorted O(logn)
 	public static void pairsNumberSumDS(int[] a, int num) {
 		Arrays.sort(a);
 		for (int i = 0, t = 0; i < a.length; i++) {
@@ -449,6 +460,11 @@ public class ArraysAlgorithms {
 		}
 	}
 
+	public static void main(String[] args) {
+		int[] a = { 1, 5, 3, 9, 7, 2 };
+		pairsNumberSumC(a, 3);
+	}
+
 	// find and print its number of negative subarrays on a new line.
 	public static void CountOfNegativeSubarrays(int[] a) {
 		// int[] a = new int[] { 1, -2, 4, -5, 1 };
@@ -476,7 +492,7 @@ public class ArraysAlgorithms {
 	// How to find sub array with largest product in array of both positive and negative number?
 	// Write a program to find length of longest consecutive sequence in array of integers?
 
-	public static void main(String[] args) throws IOException {
+	public static void mains(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String s;
 		int[] a = new int[4];

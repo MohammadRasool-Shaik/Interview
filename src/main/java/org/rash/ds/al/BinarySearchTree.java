@@ -67,7 +67,7 @@ public class BinarySearchTree {
 				currentNode = currentNode.leftNode;
 				if (currentNode == null) {
 					parentNode.leftNode = newNode;
-					return;
+			return;
 				}
 			}
 		}

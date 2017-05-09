@@ -14,7 +14,18 @@ public class Employee implements Cloneable, Comparable<Employee> {
 	private int age;
 	private String gender;
 	private Double salary;
+	private String designation;
 	private Department department;
+
+	/**
+	 * @param employeeName
+	 * @param designation
+	 */
+	public Employee(String employeeName, String designation) {
+		super();
+		this.employeeName = employeeName;
+		this.designation = designation;
+	}
 
 	/**
 	 * @return the age
@@ -56,6 +67,7 @@ public class Employee implements Cloneable, Comparable<Employee> {
 		this.department = department;
 
 	}
+
 	public Employee(int eid, String ename, int age, String gender) {
 		super();
 		this.employeeId = eid;
@@ -277,19 +289,37 @@ public class Employee implements Cloneable, Comparable<Employee> {
 		return this.getEmployeeId().compareTo(o.getEmployeeId());
 	}
 
+	/**
+	 * @return the designation
+	 */
+	public String getDesignation() {
+		return designation;
+	}
+
+	/**
+	 * @param designation
+	 *            the designation to set
+	 */
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
 	// Select * from employee order by FIRST_NAME asc,SALARY desc
 	public static int compare(Employee e1, Employee e2) {
 		if (e1.getSalary().compareTo(e2.getSalary()) == 0) {
-			if (e1.getEmployeeName().equalsIgnoreCase(e2.getEmployeeName())) {
-				return e1.getEmployeeId().compareTo(e2.getEmployeeId());
-			} else {
-				return e1.getEmployeeName().compareToIgnoreCase(e2.getEmployeeName());
-			}
+			return e1.getEmployeeName().compareToIgnoreCase(e2.getEmployeeName());
 		} else if (e1.getSalary() > e2.getSalary()) {
 			return -1;
 		} else {
 			return 1;
 		}
+	}
+
+	// compare employees based on name and in sorted list/set always first employee is designation='CEO'
+	public static int compareByName(Employee e1, Employee e2) {
+		if (e1.getDesignation().equalsIgnoreCase("CEO"))
+			return -1;
+		return e1.getEmployeeName().compareTo(e2.getEmployeeName());
 	}
 
 	public static int compareByDepartment(Employee e1, Employee e2) {

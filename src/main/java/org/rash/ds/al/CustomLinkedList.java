@@ -181,8 +181,8 @@ public class CustomLinkedList<T extends Comparable<Integer>> {
 		Node<T> slowNode = head;
 		for (Node<T> fastNode = head; fastNode.next != null; slowNode = slowNode.next, fastNode = slowNode.next.next)
 			;
-//		int middleIndex = counter / 2;
-//		Node<T> middleNode = get(middleIndex);
+		// int middleIndex = counter / 2;
+		// Node<T> middleNode = get(middleIndex);
 		return slowNode;
 	}
 
@@ -202,6 +202,11 @@ public class CustomLinkedList<T extends Comparable<Integer>> {
 		return true;
 	}
 
+	/*
+	 * Maintain two pointers – reference pointer and main pointer. Initialize both reference and main pointers to head. 
+	 * First move reference pointer to n nodes from head. Now move both pointers one by one until reference pointer reaches end. 
+	 * Now main pointer will point to nth node from the end. Return main pointer.
+	 */
 	public T findNthFromLastNode(int n) {
 		if (head == null) {
 			return null;

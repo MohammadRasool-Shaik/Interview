@@ -67,4 +67,19 @@ public class ComparableMain {
 
 	}
 
+	public static void mains(String[] args) {
+		List<Employee> employees = new ArrayList<>();
+		employees.add(new Employee("Papi", "HR"));
+		employees.add(new Employee("Rasool", "CEO"));
+		employees.add(new Employee("Saddam", "Manager"));
+		employees.add(new Employee("Imam", "Co-ordinater"));
+		employees.add(new Employee("Rasool", "CEO"));
+
+		System.out.println(employees.toString());
+		employees.sort(Employee::compareByName);
+
+		System.out.println(employees.toString());
+
+	}
+
 }

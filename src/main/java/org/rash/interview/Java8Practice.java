@@ -238,7 +238,7 @@ public class Java8Practice {
 		employees.stream().map(e -> e.getEmployeeName() + " " + e.getGender()).forEach(System.out::println);
 
 		// Select * from employee order by FIRST_NAME desc
-		employees.stream().map(e -> e.getEmployeeName().toLowerCase()).sorted(Collections.reverseOrder()).forEach(System.out::println);
+		employees.stream().sorted(Employee::compareByName).sorted(Collections.reverseOrder()).forEach(System.out::println);
 
 		// Select * from employee order by FIRST_NAME asc,SALARY desc
 		employees.stream().sorted(Employee::compare).forEach(System.out::println);
