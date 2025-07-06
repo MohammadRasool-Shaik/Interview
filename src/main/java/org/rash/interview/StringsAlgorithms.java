@@ -296,22 +296,6 @@ public class StringsAlgorithms {
         }
     }
 
-    public static String duplicateCharacters(String str) {
-        StringBuffer duplicateString = new StringBuffer();
-        for (int i = 0; i < str.length(); i++) {
-            for (int j = i; j < str.length(); j++) {
-                if (duplicateString.indexOf(str.charAt(i) + "") > -1)
-                    break;
-                else if (str.charAt(i) == str.charAt(j) && i != j) {
-                    duplicateString.append(str.charAt(i));
-                    break;
-                }
-
-            }
-        }
-        return duplicateString.toString();
-    }
-
     public static void duplicateChars(String str) {
         Map<Character, Integer> count = new HashMap<>();
         for (char t : str.toCharArray()) {
@@ -330,7 +314,6 @@ public class StringsAlgorithms {
     }
 
     public static String removeDuplicateCharacter(String str) {
-
         Set<Character> t = new LinkedHashSet<>();
         for (char c : str.toCharArray()) {
             t.add(c);
@@ -341,24 +324,26 @@ public class StringsAlgorithms {
         return s.toString();
     }
 
-    public static String removeDuplicateChars(String str) {
-        StringBuilder sb = new StringBuilder(str);
-        for (int i = 0; i < sb.length(); i++) {
-            for (int j = 0; j < sb.length(); j++) {
-                if (sb.charAt(i) == sb.charAt(j) && i != j) {
-                    sb.deleteCharAt(j);
+    public static String duplicateCharacters(String str) {
+        StringBuilder duplicateString = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            for (int j = i; j < str.length(); j++) {
+                if (duplicateString.indexOf(str.charAt(i) + "") > -1)
+                    break;
+                else if (str.charAt(i) == str.charAt(j) && i != j) {
+                    duplicateString.append(str.charAt(i));
+                    break;
                 }
+
             }
         }
-        return sb.toString();
+        return duplicateString.toString();
     }
 
     public static String removeDuplicateWords(String str) {
         String[] words = str.split("\\s+");
-        Set<String> rw = new LinkedHashSet<>();
         StringBuilder sb = new StringBuilder();
-        for (String word : words)
-            rw.add(word);
+        Set<String> rw = new LinkedHashSet<>(Arrays.asList(words));
 
         rw.forEach(s -> sb.append(s).append(" "));
         return sb.toString().trim();
@@ -370,7 +355,7 @@ public class StringsAlgorithms {
 
         for (int i = 0; i < words.length; i++)
             for (int j = i + 1; j < words.length; j++)
-                if (words[j] != null && words[i].toLowerCase().equals(words[j].toLowerCase()))
+                if (words[j] != null && words[i].equalsIgnoreCase(words[j]))
                     copyArray(words, j);
 
         for (String word : words)
@@ -379,28 +364,14 @@ public class StringsAlgorithms {
         return sb.toString().trim();
     }
 
-    public static String removeDuplicateWordsC(String str) {
-        String[] words = str.split("\\s+");
-        Set<String> rw = new LinkedHashSet<>();
-        StringBuilder sb = new StringBuilder();
-        for (String word : words)
-            rw.add(word);
-
-        rw.forEach(s -> sb.append(s).append(" "));
-        return sb.toString().trim();
-    }
-
     public static String removeSpecificChar(String str, char c) {
-        char[] charArray = str.toCharArray();
-        for (int i = 0; i < charArray.length; i++)
-            if (charArray[i] == c)
-                copyArray(charArray, i);
-
-        // StringBuffer sb = new StringBuffer(str); for (int i = 0; i <
-        // charArray.length; i++) { if (charArray[i] == c) sb.deleteCharAt(i); }
-        // sb.toString();
-
-        return String.valueOf(charArray);
+        StringBuilder sb = new StringBuilder();
+        for (Character ch : str.toCharArray())
+            if (ch != c)
+                sb.append(c);
+        //OR
+        str.chars().mapToObj(x -> (char) x).filter(x -> x != c).forEach(sb::append);
+        return sb.toString();
     }
 
     public static void copyArray(String[] a, int index) {
@@ -413,10 +384,6 @@ public class StringsAlgorithms {
         for (int i = index; i < a.length - 1; i++)
             a[i] = a[i + 1];
         a[a.length - 1] = '\u0000';
-    }
-
-    public static void removeDuplicatesCharacters(String str) {
-
     }
 
     public static String longestSubStringWithoutRepeatingChars(String str) {
@@ -457,12 +424,6 @@ public class StringsAlgorithms {
                 }
             }
         }
-        // for (int i = 0; i < str.length(); i++) {
-        // for (int j = 1; j <= str.length() - i; j++) {
-        // System.out.println(str.substring(i, i + j));
-        // }
-        // System.out.println();
-        // }
         return longestPalindrome;
     }
 
