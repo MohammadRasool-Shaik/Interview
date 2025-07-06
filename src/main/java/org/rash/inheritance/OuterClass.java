@@ -2,85 +2,82 @@ package org.rash.inheritance;
 
 /**
  * @author mshai9
- *
  */
 public class OuterClass {
-	
 
-	public class InnerClass {
 
-		private int t;
+    public static void sTest() {
+        System.out.println("sTest");
+    }
 
-		public InnerClass() {
+    public void test() {
+        System.out.println("Test");
+        StaticInnerClass t = new StaticInnerClass(1);
+        t.sMethodOne();
 
-		}
+        OuterClass o = new OuterClass();
+        OuterClass.InnerClass i = o.new InnerClass();
+        i.iMethodOne();
+    }
 
-		public InnerClass(int t) {
-			this.t = t;
-		}
+    private static class StaticInnerClass {
+        private int x;
 
-		private void iMethodOne() {
-			test();
-			sTest();
-		}
+        public StaticInnerClass(int x) {
+            this.x = x;
+        }
 
-		/**
-		 * @return the t
-		 */
-		public int getT() {
-			return t;
-		}
+        private void sMethodOne() {
+            sTest();
+        }
 
-		/**
-		 * @param t
-		 *            the t to set
-		 */
-		public void setT(int t) {
-			this.t = t;
-		}
+        /**
+         * @return the x
+         */
+        public int getX() {
+            return x;
+        }
 
-	}
+        /**
+         * @param x the x to set
+         */
+        public void setX(int x) {
+            this.x = x;
+        }
 
-	private static class StaticInnerClass {
-		private int x;
+    }
 
-		public StaticInnerClass(int x) {
-			this.x = x;
-		}
+    public class InnerClass {
 
-		private void sMethodOne() {
-			sTest();
-		}
+        private int t;
 
-		/**
-		 * @return the x
-		 */
-		public int getX() {
-			return x;
-		}
+        public InnerClass() {
 
-		/**
-		 * @param x
-		 *            the x to set
-		 */
-		public void setX(int x) {
-			this.x = x;
-		}
+        }
 
-	}
+        public InnerClass(int t) {
+            this.t = t;
+        }
 
-	public static void sTest() {
-		System.out.println("sTest");
-	}
+        private void iMethodOne() {
+            test();
+            sTest();
+        }
 
-	public void test() {
-		System.out.println("Test");
-		StaticInnerClass t = new StaticInnerClass(1);
-		t.sMethodOne();
+        /**
+         * @return the t
+         */
+        public int getT() {
+            return t;
+        }
 
-		OuterClass o = new OuterClass();
-		OuterClass.InnerClass i = o.new InnerClass();
-		i.iMethodOne();
-	}
+        /**
+         * @param t the t to set
+         */
+        public void setT(int t) {
+            this.t = t;
+        }
+
+    }
 
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.rash.interview;
 
@@ -13,7 +13,21 @@ import java.util.concurrent.Executors;
  * @author Admin
  */
 public class Dispatcher {
-	private Map<Integer, Worker> workers = new ConcurrentHashMap<Integer, Worker>();
+    private Map<Integer, Worker> workers = new ConcurrentHashMap<Integer, Worker>();
+
+    public static void main(String[] args) {
+        Dispatcher d = new Dispatcher();
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        d.acquireWorker(1).performTask("Task11");
+        d.acquireWorker(2).performTask("Task21");
+        System.out.println(String.join(", ", d.acquireWorker(2).getTasks()));
+        d.releaseWorker(2);
+        d.acquireWorker(1).performTask("Task12");
+        System.out.println(String.join(", ", d.acquireWorker(1).getTasks()));
+        d.releaseWorker(1);
+
+        executor.submit(d.new Worker(1));
+    }
 
     public Iterable<Worker> getWorkers() {
         return this.workers.values();
@@ -21,7 +35,7 @@ public class Dispatcher {
 
     public Worker acquireWorker(int id) {
         Worker w = this.workers.getOrDefault(id, null);
-        
+
         if (w == null) {
             w = new Worker(id);
             this.workers.put(id, w);
@@ -38,10 +52,14 @@ public class Dispatcher {
         w.dispose();
     }
 
-    public class Worker implements Runnable{
+    public class Worker implements Runnable {
         private ArrayList<String> tasks = new ArrayList<String>();
 
         private int id;
+
+        public Worker(int id) {
+            this.id = id;
+        }
 
         public int getId() {
             return this.id;
@@ -49,10 +67,6 @@ public class Dispatcher {
 
         public Iterable<String> getTasks() {
             return this.tasks;
-        }
-
-        public Worker(int id) {
-            this.id = id;
         }
 
         public void performTask(String task) {
@@ -66,26 +80,12 @@ public class Dispatcher {
             this.tasks = null;
         }
 
-		/* (non-Javadoc)
-		 * @see java.lang.Runnable#run()
-		 */
-		@Override
-		public void run() {
-			performTask("");
-		}
-    }
-
-    public static void main(String[] args) {
-        Dispatcher d = new Dispatcher();
-        ExecutorService executor = Executors.newFixedThreadPool(5);
-        d.acquireWorker(1).performTask("Task11");
-        d.acquireWorker(2).performTask("Task21");
-        System.out.println(String.join(", ", d.acquireWorker(2).getTasks()));
-        d.releaseWorker(2);
-        d.acquireWorker(1).performTask("Task12");
-        System.out.println(String.join(", ", d.acquireWorker(1).getTasks()));
-        d.releaseWorker(1);
-        
-        executor.submit(d.new Worker(1));
+        /* (non-Javadoc)
+         * @see java.lang.Runnable#run()
+         */
+        @Override
+        public void run() {
+            performTask("");
+        }
     }
 }

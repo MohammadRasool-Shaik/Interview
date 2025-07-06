@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.rash.threads;
 
@@ -8,27 +8,27 @@ package org.rash.threads;
  *
  */
 public class Message {
-	private String msg;
+    private String msg;
 
-	/**
-	 * 
-	 */
-	public Message() {
-	}
+    /**
+     *
+     */
+    public Message() {
+    }
 
-	/**
-	 * @return the msg
-	 */
-	public String getMsg() {
-		return msg;
-	}
+    /**
+     * @return the msg
+     */
+    public String getMsg() {
+        return msg;
+    }
 
-	/**
-	 * @param msg
-	 *            the msg to set
-	 */
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
+    /**
+     * @param msg
+     *            the msg to set
+     */
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
 }

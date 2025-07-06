@@ -1,7 +1,10 @@
 /*package org.rash.threads;
 
-*//**
+ *//**
  * @author Ammi 23-Apr-2016
+ * @return the msg
+ * @param msg
+ * the msg to set
  *//*
 public class WaiterAndNotiferExample {
 	public static void main(String args[]) {
@@ -27,16 +30,16 @@ class Message {
 	private String msg;
 
 	*//**
-	 * @return the msg
-	 *//*
+ * @return the msg
+ *//*
 	public String getMsg() {
 		return msg;
 	}
 
 	*//**
-	 * @param msg
-	 *            the msg to set
-	 *//*
+ * @param msg
+ *            the msg to set
+ *//*
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}

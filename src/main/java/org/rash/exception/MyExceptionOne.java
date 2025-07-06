@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.rash.exception;
 
@@ -9,30 +9,29 @@ package org.rash.exception;
  */
 public class MyExceptionOne {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			int x = 5 / 0;
-			System.out.println("temp");
-		} finally {
-			System.out.println("finally");
-		}
-		System.out.println("done");
-	}
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        try {
+            int x = 5 / 0;
+            System.out.println("temp");
+        } finally {
+            System.out.println("finally");
+        }
+        System.out.println("done");
+    }
 
-	public static class ExceptionTest {
-		static class TestException extends Exception {
-		}
+    public static class ExceptionTest {
+        public static void test() throws TestException /* Point X */ {
+            throw new TestException();
+        }
 
-		public static void test() throws TestException /* Point X */
-		{
-			throw new TestException();
-		}
+        public static void main(String[] args) {
 
-		public static void main(String[] args) {
-			
-		}
-	}
+        }
+
+        static class TestException extends Exception {
+        }
+    }
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.rash.inheritance;
 
@@ -8,36 +8,37 @@ package org.rash.inheritance;
  */
 public class TestInheritance {
 
-	public static void main(String arg[]) {
-		One t = new Two();
-		
-		System.out.println(t);
-	}
+    public static void main(String arg[]) {
+        One t = new Two();
+
+        System.out.println(t);
+    }
 }
 
 class One extends Object {
-	protected void methodOne() {
+    protected void methodOne() {
 
-	}
-	
-	@Override
-	public String toString(){
-		return "One";
-	}
-	
-	
+    }
+
+    @Override
+    public String toString() {
+        return "One";
+    }
+
+
 }
 
 class Two extends One {
-	public void methodOne(){
+    public void methodOne() {
 
-	}
-	@Override
-	public String toString(){
-		return "two";
-	}
-	
+    }
 
-	public void test() {
-	}
+    @Override
+    public String toString() {
+        return "two";
+    }
+
+
+    public void test() {
+    }
 }

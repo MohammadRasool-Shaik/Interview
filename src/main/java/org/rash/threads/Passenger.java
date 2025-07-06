@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.rash.threads;
 
@@ -8,26 +8,26 @@ package org.rash.threads;
  */
 public class Passenger extends Thread {
 
-	private int seatsNeeded;
+    private int seatsNeeded;
 
-	public Passenger(String name, Runnable target, int seatsRequired) {
-		super(target, name);
-		this.seatsNeeded = seatsRequired;
-	}
+    public Passenger(String name, Runnable target, int seatsRequired) {
+        super(target, name);
+        this.seatsNeeded = seatsRequired;
+    }
 
-	/**
-	 * @return the seatsNeeded
-	 */
-	public int getSeatsNeeded() {
-		return seatsNeeded;
-	}
+    /**
+     * @return the seatsNeeded
+     */
+    public int getSeatsNeeded() {
+        return seatsNeeded;
+    }
 
-	/**
-	 * @param seatsNeeded
-	 *            the seatsNeeded to set
-	 */
-	public void setSeatsNeeded(int seatsNeeded) {
-		this.seatsNeeded = seatsNeeded;
-	}
+    /**
+     * @param seatsNeeded
+     *            the seatsNeeded to set
+     */
+    public void setSeatsNeeded(int seatsNeeded) {
+        this.seatsNeeded = seatsNeeded;
+    }
 
 }

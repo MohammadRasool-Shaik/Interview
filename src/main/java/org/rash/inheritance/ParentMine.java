@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.rash.inheritance;
 
@@ -8,16 +8,15 @@ package org.rash.inheritance;
  */
 public class ParentMine {
 
-	int salary = 3;
-	int test;
+    int salary = 3;
+    int test;
 
-	/**
-	 * @return the salary
-	 */
-	int getSalary() {
-		return salary;
-	}
-
+    /**
+     * @return the salary
+     */
+    int getSalary() {
+        return salary;
+    }
 
 
 }
