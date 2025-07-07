@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -154,7 +153,7 @@ public class StringsAlgorithms {
     }
 
     //Input: Hello World output: World Hello
-    public String reverseWords(String str) {
+    public static String reverseWords(String str) {
         String[] words = str.split("\\s+");
         StringBuilder tempString = new StringBuilder();
         for (int i = (words.length - 1); i > 0; i--) {
@@ -517,12 +516,12 @@ public class StringsAlgorithms {
         for (int i = 0; i < s.length() - 1; i++) {
             // odd cases like 121
             String palindrome = intermediatePalindrome(s, i, i);
-            if (palindrome!=null && palindrome.length() > longest.length()) {
+            if (palindrome != null && palindrome.length() > longest.length()) {
                 longest = palindrome;
             }
             // even cases like 1221
             palindrome = intermediatePalindrome(s, i, i + 1);
-            if (palindrome!=null && palindrome.length() > longest.length()) {
+            if (palindrome != null && palindrome.length() > longest.length()) {
                 longest = palindrome;
             }
         }
@@ -634,33 +633,13 @@ public class StringsAlgorithms {
         return first + c + last;
     }
 
-    public static void mains(String args[]) {
-
-        String str = "This is String , split by StringTokenizer, created by mkyong";
-        StringTokenizer st = new StringTokenizer(str);
-
-        System.out.println("---- Split by space ------");
-        while (st.hasMoreElements()) {
-            System.out.println(st.nextElement());
-        }
-
-        System.out.println("---- Split by comma ',' ------");
-        StringTokenizer st2 = new StringTokenizer(str, ",");
-
-        while (st2.hasMoreElements()) {
-            System.out.println(st2.nextElement());
-        }
-    }
-
     public static void main(String[] args) {
 
         frequencyOfCharactersInAString("Hello World");
-        Map<String, Integer> f = new HashMap<>();
-        List<String> ts = new ArrayList<>();
-        String t = "";
-        Arrays.stream(t.split("\\s+")).collect(Collectors.toMap(x -> x, String::length, (newVal, oldVal) -> newVal, () -> f));
         String[] x = {"apple", "apple", "banana", "apple", "orange", "banana", "papaya"};
 
+        Map<Character, Long> collect = Arrays.stream(x).collect(Collectors.groupingBy(m -> m.charAt(0), Collectors.counting()));
+        collect.forEach((k, v) -> System.out.println(k + " " + v));
 
         StringBuilder sb = new StringBuilder();
         sb.append("madams");
@@ -674,26 +653,6 @@ public class StringsAlgorithms {
     }
 
     //LCS (Longest Common Sub-sequence https://www.geeksforgeeks.org/dsa/longest-common-subsequence-dp-4/)
-
-    public static void main(int[] args) throws Throwable {
-
-        // System.out.println(StringsAlgorithms.reverseWords("Monday Tuesday Wednesday Thursday Friday Saturday Sunday"));
-        // StringsAlgorithms.frequencyOfCharactersInAString("hhaaHhhr");
-        //
-        // System.out.println((int) 'a' + " " + (int) 'A');
-
-        /*
-         * t.findDuplicateCharatersInString("Java2Novice"); System.out.println(t.removeDuplicatesFromString("Java2Novice"));
-         *
-         * System.out.println(t.removeDuplicateWordsFromString( "Twinkle Twinkle Little Star Little"));
-         *
-         * StringBuilder b = new StringBuilder(t.stringPallindrom("MADAM"));
-         *
-         * System.gc();
-         *
-         * t.finalize();
-         */
-    }
 
     public static class Interview {
 
