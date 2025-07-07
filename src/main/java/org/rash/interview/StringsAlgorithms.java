@@ -452,6 +452,83 @@ public class StringsAlgorithms {
         a[a.length - 1] = '\u0000';
     }
 
+    public static void main(String[] args) {
+
+        frequencyOfCharactersInAString("Hello World");
+        String[] x = {"apple", "apple", "banana", "apple", "orange", "banana", "papaya"};
+
+        Map<Character, Long> collect = Arrays.stream(x).collect(Collectors.groupingBy(m -> m.charAt(0), Collectors.counting()));
+        collect.forEach((k, v) -> System.out.println(k + " " + v));
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("madams");
+        System.out.println(sb);
+        System.out.println(sb.reverse());
+        System.out.println(isPalindrome("madams"));
+        String s1 = "xxx";
+        // String s2 = "ABC";
+        System.out.println("\nString " + s1 + ":\nPermutations: " + possiblePermutations(s1));
+        // System.out.println("\nString " + s2 + ":\nPermutations: " + crunchifyPermutation(s2));
+    }
+
+    public static class Interview {
+
+        public static void interview(String obj) {
+            System.out.println("String");
+        }
+
+        public static void interview(double d) {
+            System.out.println("double");
+        }
+
+        public static void interview(int i) {
+            System.out.println("int");
+        }
+
+        public static void interview(Integer in) {
+            System.out.println("Integer");
+        }
+
+        public static void interview(Object obj) {
+            System.out.println("Object");
+        }
+
+
+        public static void main(String args[]) {
+//            interview(null);
+            interview(3);
+            if (null == null) {
+                System.out.println("true");
+            }
+        }
+    }
+
+    public static void election(String[] names) {
+//         names = {"Alice", "Bob", "Alice", "Charlie", "Bob", "Alice", "David", "Bob", "Alice"};
+
+        Optional<Entry<String, Long>> winner = Arrays.stream(names).collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream().max(Entry.comparingByValue());
+        winner.ifPresent(entry -> {
+            System.out.println("Winner: " + entry.getKey());
+            System.out.println("Votes: " + entry.getValue());
+        });
+
+        //OR
+        Map<String, Long> collect = Arrays.stream(names).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        List<Entry<String, Long>> sortedList = collect.entrySet().stream().sorted(Map.Entry.<String, Long>comparingByValue().reversed()).collect(Collectors.toList());
+
+        Optional<Entry<String, Long>> first = sortedList.stream().findFirst();
+
+        first.ifPresent(entry -> {
+            System.out.println("Winner: " + entry.getKey());
+            System.out.println("Votes: " + entry.getValue());
+        });
+    }
+
+    //Real String algo==============================
+
+    //LCS (Longest Common Sub-sequence https://www.geeksforgeeks.org/dsa/longest-common-subsequence-dp-4/)
+
     public static String longestSubStringWithoutRepeatingChars(String str) {
         char[] charArray = str.toCharArray();
         String longestSubString = null;
@@ -474,23 +551,6 @@ public class StringsAlgorithms {
         System.out.println("Longest SubString " + longestSubString);
         System.out.println("longest SubString Length " + longestSubStringLength);
         return longestSubString;
-    }
-
-    public static String longestPalindrome(String str) {
-        int max = 1;
-        String longestPalindrome = null;
-        for (int i = 0; i < str.length(); i++) {
-            for (int j = i + 1; j < str.length(); j++) {
-                String substring = str.substring(i, j + 1);
-                if (substring.length() > 1 && isPalindrome(substring)) {
-                    if (substring.length() > max) {
-                        longestPalindrome = substring;
-                        max = substring.length();
-                    }
-                }
-            }
-        }
-        return longestPalindrome;
     }
 
     public static String intermediatePalindrome(String s, int left, int right) {
@@ -564,7 +624,7 @@ public class StringsAlgorithms {
     }
 
     public static Set<String> permutationFinder(String str) {
-        Set<String> perm = new HashSet<String>();
+        Set<String> perm = new HashSet<>();
         // Handling error scenarios
         if (str == null) {
             return null;
@@ -583,107 +643,30 @@ public class StringsAlgorithms {
         return perm;
     }
 
-    public static void election(String[] names) {
-//         names = {"Alice", "Bob", "Alice", "Charlie", "Bob", "Alice", "David", "Bob", "Alice"};
-
-        Optional<Entry<String, Long>> winner = Arrays.stream(names).collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream().max(Entry.comparingByValue());
-        winner.ifPresent(entry -> {
-            System.out.println("Winner: " + entry.getKey());
-            System.out.println("Votes: " + entry.getValue());
-        });
-
-        //OR
-        Map<String, Long> collect = Arrays.stream(names).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-
-        List<Entry<String, Long>> sortedList = collect.entrySet().stream().sorted(Map.Entry.<String, Long>comparingByValue().reversed()).collect(Collectors.toList());
-
-        Optional<Entry<String, Long>> first = sortedList.stream().findFirst();
-
-        first.ifPresent(entry -> {
-            System.out.println("Winner: " + entry.getKey());
-            System.out.println("Votes: " + entry.getValue());
-        });
-
-
-    }
-
-    public static List<String> crunchifyPermutation(String str) {
-        List<String> crunchifyResult = new ArrayList<String>();
+    public static List<String> possiblePermutations(String str) {
+        List<String> result = new ArrayList<>();
         if (str == null) {
             return null;
         } else if (str.length() == 0) {
-            crunchifyResult.add("");
-            return crunchifyResult;
+            result.add("");
+            return result;
         }
 
         char firstChar = str.charAt(0);
         String rem = str.substring(1);
-        List<String> words = crunchifyPermutation(rem);
+        List<String> words = possiblePermutations(rem);
         for (String newString : words) {
             for (int i = 0; i <= newString.length(); i++) {
-                crunchifyResult.add(crunchifyCharAdd(newString, firstChar, i));
+                result.add(permutation(newString, firstChar, i));
             }
         }
-        return crunchifyResult;
+        return result;
     }
 
-    public static String crunchifyCharAdd(String str, char c, int i) {
+    public static String permutation(String str, char c, int i) {
         String first = str.substring(0, i);
         String last = str.substring(i);
         return first + c + last;
-    }
-
-    public static void main(String[] args) {
-
-        frequencyOfCharactersInAString("Hello World");
-        String[] x = {"apple", "apple", "banana", "apple", "orange", "banana", "papaya"};
-
-        Map<Character, Long> collect = Arrays.stream(x).collect(Collectors.groupingBy(m -> m.charAt(0), Collectors.counting()));
-        collect.forEach((k, v) -> System.out.println(k + " " + v));
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("madams");
-        System.out.println(sb);
-        System.out.println(sb.reverse());
-        System.out.println(isPalindrome("madams"));
-        String s1 = "xxx";
-        // String s2 = "ABC";
-        System.out.println("\nString " + s1 + ":\nPermutations: " + crunchifyPermutation(s1));
-        // System.out.println("\nString " + s2 + ":\nPermutations: " + crunchifyPermutation(s2));
-    }
-
-    //LCS (Longest Common Sub-sequence https://www.geeksforgeeks.org/dsa/longest-common-subsequence-dp-4/)
-
-    public static class Interview {
-
-        public static void interview(String obj) {
-            System.out.println("String");
-        }
-
-        public static void interview(double d) {
-            System.out.println("double");
-        }
-
-        public static void interview(int i) {
-            System.out.println("int");
-        }
-
-        public static void interview(Integer in) {
-            System.out.println("Integer");
-        }
-
-        public static void interview(Object obj) {
-            System.out.println("Object");
-        }
-
-
-        public static void main(String args[]) {
-//            interview(null);
-            interview(3);
-            if (null == null) {
-                System.out.println("true");
-            }
-        }
     }
 
 }
