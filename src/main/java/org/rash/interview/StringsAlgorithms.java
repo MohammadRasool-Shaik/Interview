@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -152,10 +153,24 @@ public class StringsAlgorithms {
         return Arrays.stream(str.split("\\s+")).map(StringsAlgorithms::reverseString).collect(Collectors.joining(" "));
     }
 
-    public static String sortStringBasedOnCharactersUsingArrays(String str) {
-        char[] a = str.toCharArray();
-        Arrays.sort(a);
-        return new String(a);
+    //Input: Hello World output: World Hello
+    public String reverseWords(String str) {
+        String[] words = str.split("\\s+");
+        StringBuilder tempString = new StringBuilder();
+        for (int i = (words.length - 1); i > 0; i--) {
+            tempString.append(words[i]).append(" ");
+        }
+        return tempString.toString().trim();
+    }
+
+    //Input: Hello World output: World Hello
+    public String reverseWordsTokenizer(String str) {
+        StringTokenizer tokenizer = new StringTokenizer(str);
+        StringBuilder builder = new StringBuilder();
+        while (tokenizer.hasMoreTokens()) {
+            builder.insert(0, tokenizer.nextToken() + " ");
+        }
+        return builder.toString().trim();
     }
 
     public static String sortStringBasedOnCharacters(String str) {
@@ -172,6 +187,14 @@ public class StringsAlgorithms {
             }
         }
         return a;
+    }
+
+    // sort characters in a string
+    private static String anagramKey(String word) {
+        word = word.toLowerCase();
+        char[] chars = word.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
     }
 
     public static boolean isAnagram(String str, String str1) {
@@ -194,11 +217,23 @@ public class StringsAlgorithms {
         System.out.println(matchMap);
     }
 
-    private static String anagramKey(String word) {
-        word = word.toLowerCase();
-        char[] chars = word.toCharArray();
-        Arrays.sort(chars);
-        return new String(chars);
+    public String frequencyOfCharactersInStringUsingCollections(String str) {
+        Map<Character, Integer> x = new HashMap<>();
+        for (char t : str.toCharArray()) {
+            if (x.containsKey(t)) {
+                x.put(t, x.get(t) + 1);
+            } else {
+                x.put(t, 1);
+            }
+        }
+
+        for (Map.Entry<Character, Integer> m : x.entrySet()) {
+            if (m.getValue() > 1) {
+                System.out.println(m.getKey() + " -->" + m.getValue());
+            }
+        }
+
+        return null;
     }
 
     public static void frequencyOfCharactersInStringUsingStreams(String str) {
@@ -223,6 +258,31 @@ public class StringsAlgorithms {
         }
     }
 
+    public void frequencyOfWords(String myString) {
+        Map<String, Long> collect = Arrays.stream(myString.split("\\s+")).filter(Objects::nonNull).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        collect.forEach((k, v) -> System.out.println(k + " " + v));
+    }
+
+    public void frequencyOfWordsInStringWOTUsingCollections() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter the sentence");
+        String st = br.readLine();
+        String arr[] = new String[st.length()];
+        String[] words = new String[st.length()];
+        int[] counts = new int[arr.length];
+        words[0] = words[0];
+        counts[0] = 1;
+        for (int i = 1, j = 0; i < arr.length; i++) {
+            if (words[j].equals(arr[i])) {
+                counts[j]++;
+            } else {
+                j++;
+                words[j] = arr[i];
+                counts[j] = 1;
+            }
+        }
+    }
+
     public static void frequencyOfWordsInFileUsingStreams(String filePath) throws IOException {
         try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
             Map<String, Long> myMap = lines
@@ -234,12 +294,19 @@ public class StringsAlgorithms {
         }
     }
 
-    public static void frequencyOfWordsInFileUsingStream(String filePath) throws IOException {
+    public void frequencyOfWordsInFile(String filePath) throws IOException {
         FileReader fr = new FileReader(filePath);
         BufferedReader br = new BufferedReader(fr);
-        Map<String, Long> myMap = new HashMap<>();
+        Map<String, Integer> myMap = new HashMap<String, Integer>();
         for (String readLine = br.readLine(); readLine != null; readLine = br.readLine()) {
-            Arrays.stream(readLine.split("\\s+")).filter(word -> !word.isBlank()).collect(Collectors.toMap(Function.identity(), word -> 1L, Long::sum, () -> myMap));
+            String[] words = readLine.split("\\s+");
+            for (String word : words) {
+                if (myMap.containsKey(word)) {
+                    myMap.put(word, myMap.get(word) + 1);
+                } else {
+                    myMap.put(word, 1);
+                }
+            }
         }
         myMap.forEach((key, value) -> System.out.println(key + " " + value));
         br.close();
@@ -313,17 +380,6 @@ public class StringsAlgorithms {
         });
     }
 
-    public static String removeDuplicateCharacter(String str) {
-        Set<Character> t = new LinkedHashSet<>();
-        for (char c : str.toCharArray()) {
-            t.add(c);
-        }
-        StringBuilder s = new StringBuilder();
-
-        t.forEach(s::append);
-        return s.toString();
-    }
-
     public static String duplicateCharacters(String str) {
         StringBuilder duplicateString = new StringBuilder();
         for (int i = 0; i < str.length(); i++) {
@@ -338,6 +394,17 @@ public class StringsAlgorithms {
             }
         }
         return duplicateString.toString();
+    }
+
+    public static String removeDuplicateCharacter(String str) {
+        Set<Character> t = new LinkedHashSet<>();
+        for (char c : str.toCharArray()) {
+            t.add(c);
+        }
+        StringBuilder s = new StringBuilder();
+
+        t.forEach(s::append);
+        return s.toString();
     }
 
     public static String removeDuplicateWords(String str) {
@@ -450,12 +517,12 @@ public class StringsAlgorithms {
         for (int i = 0; i < s.length() - 1; i++) {
             // odd cases like 121
             String palindrome = intermediatePalindrome(s, i, i);
-            if (palindrome.length() > longest.length()) {
+            if (palindrome!=null && palindrome.length() > longest.length()) {
                 longest = palindrome;
             }
             // even cases like 1221
             palindrome = intermediatePalindrome(s, i, i + 1);
-            if (palindrome.length() > longest.length()) {
+            if (palindrome!=null && palindrome.length() > longest.length()) {
                 longest = palindrome;
             }
         }
@@ -626,157 +693,6 @@ public class StringsAlgorithms {
          *
          * t.finalize();
          */
-    }
-
-    public boolean isPalindromeUsingLinkedList(String str) {
-        // List<String> t = new LinkedList<String>();
-        for (int i = str.length() - 1; i >= 0; i--) {
-
-        }
-        return false;
-    }
-
-    //Input: Hello World output: World Hello
-    public String reverseWords(String str) {
-        String[] words = str.split("\\s+");
-        StringBuilder tempString = new StringBuilder();
-        for (int i = (words.length - 1); i > 0; i--) {
-            tempString.append(words[i]).append(" ");
-        }
-        return tempString.toString().trim();
-    }
-
-    //Input: Hello World output: World Hello
-    public String reverseWordsTokenizer(String str) {
-        StringTokenizer tokenizer = new StringTokenizer(str);
-        StringBuilder builder = new StringBuilder();
-        while (tokenizer.hasMoreTokens()) {
-            builder.insert(0, tokenizer.nextToken() + " ");
-        }
-        return builder.toString().trim();
-    }
-
-    public void frequencyOfCharacters(String str) {
-        char[] c = str.toCharArray();
-        int count = 0;
-
-        for (int i = 0; i < c.length; i++) {
-            boolean flag = true;
-            for (int k = 0; k < i; k++) {
-                if (c[i] == (str.charAt(k)))
-                    flag = false;
-            }
-            if (flag) {
-                for (int j = 0; j < str.length(); j++) {
-                    if (c[i] == str.charAt(j))
-                        count = count + 1;
-                }
-                System.out.println(c[i] + " " + " " + (count));
-                count = 0;
-            }
-        }
-    }
-
-    public void frequencyOfWords(String myString) {
-        Map<String, Long> collect = Arrays.stream(myString.split("\\s+")).filter(Objects::nonNull).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        collect.forEach((k, v) -> System.out.println(k + " " + v));
-    }
-
-    public void frequencyOfWordsInFile(String filePath) throws IOException {
-        FileReader fr = new FileReader("E:\\Workspace\\work.txt");
-        BufferedReader br = new BufferedReader(fr);
-        Map<String, Integer> myMap = new HashMap<String, Integer>();
-        for (String readLine = br.readLine(); readLine != null; readLine = br.readLine()) {
-            String[] words = readLine.split("\\s+");
-            for (String word : words) {
-                if (myMap.containsKey(word)) {
-                    myMap.put(word, myMap.get(word) + 1);
-                } else {
-                    myMap.put(word, 1);
-                }
-            }
-        }
-        myMap.forEach((key, value) -> System.out.println(key + " " + value));
-        br.close();
-        fr.close();
-    }
-
-    public void frequencyOfWordsInFileWOTUsingCollections() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter the sentence");
-        String st = br.readLine();
-        String arr[] = new String[st.length()];
-        String[] words = new String[st.length()];
-        int[] counts = new int[arr.length];
-        words[0] = words[0];
-        counts[0] = 1;
-        for (int i = 1, j = 0; i < arr.length; i++) {
-            if (words[j].equals(arr[i])) {
-                counts[j]++;
-            } else {
-                j++;
-                words[j] = arr[i];
-                counts[j] = 1;
-            }
-        }
-    }
-
-    public String findDuplicateCharactersInString(String str) {
-        Map<Character, Integer> x = new HashMap<Character, Integer>();
-        for (char t : str.toCharArray()) {
-            if (x.containsKey(t)) {
-                x.put(t, x.get(t) + 1);
-            } else {
-                x.put(t, 1);
-            }
-        }
-
-        for (Map.Entry<Character, Integer> m : x.entrySet()) {
-            if (m.getValue() > 1) {
-                System.out.println(m.getKey() + " -->" + m.getValue());
-            }
-        }
-
-        return null;
-    }
-
-    public String removeDuplicatesFromString(String str) {
-
-        Set<Character> t = new LinkedHashSet<Character>();
-        for (char c : str.toCharArray()) {
-            t.add(c);
-        }
-        StringBuilder s = new StringBuilder();
-        for (Character m : t) {
-            s.append(m);
-        }
-
-        /*
-         * StringBuilder b = new StringBuilder(str); for (int i = 0; i < b.length(); i++) { for (int j = i + 1; j < b.length(); j++) { if (b.charAt(i) == b.charAt(j)) {
-         * b.deleteCharAt(j); } } }
-         */
-
-        return s.toString();
-    }
-
-    public String removeDuplicateWordsFromString(String str) {
-        Set<String> s = new LinkedHashSet<String>();
-        for (String t : str.split("\\s+")) {
-            s.add(t);
-        }
-        StringBuilder b = new StringBuilder();
-        for (String t : s) {
-            b.append(t + " ");
-        }
-        return b.toString().trim();
-    }
-
-    public String removeSpecificCharactersFromString(String str) {
-        return null;
-    }
-
-    public void allPossibleCombinationOfCharsInString() {
-
     }
 
     public static class Interview {
